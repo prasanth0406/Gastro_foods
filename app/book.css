@@ -1,0 +1,65 @@
+.book-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  perspective: 1500px;
+}
+
+.book {
+  width: 300px;
+  height: 400px;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.cover {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  background: #2c1810;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transform-origin: left;
+  transition: transform 1s ease;
+
+  z-index: 3;
+  backface-visibility: hidden;
+}
+
+.book.open .cover {
+  transform: rotateY(-180deg);
+}
+
+.page {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+
+  background: #f8f1df;
+  padding: 40px;
+
+  box-sizing: border-box;
+}
+
+.page-left {
+  left: 0;
+}
+
+.page-right {
+  left: 300px;
+}
+
+.page h2 {
+  font-size: 28px;
+}
+
+.page p {
+  line-height: 1.7;
+}

@@ -204,16 +204,15 @@ export default function RealisticBook() {
   }));
 
   // Fixed Event Handlers
-  const openNextPage = (e) => {
-    if (e) e.stopPropagation();
-    if (currentPage < sheets.length) setCurrentPage((prev) => prev + 1);
-  };
+ const openNextPage = (e: React.MouseEvent<HTMLDivElement>) => {
+  if (e) e.stopPropagation();
+  if (currentPage < sheets.length) setCurrentPage((prev) => prev + 1);
+};
 
-  const openPrevPage = (e) => {
-    if (e) e.stopPropagation();
-    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
-  };
-
+const openPrevPage = (e: React.MouseEvent<HTMLDivElement>) => {
+  if (e) e.stopPropagation();
+  if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+};
   return (
     // bg-transparent allows you to place this over any custom background in your app
     <div

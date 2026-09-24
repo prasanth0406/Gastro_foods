@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo } from 'react';
+import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo, useState } from 'react';
 
 import * as THREE from 'three';
 
@@ -142,6 +142,17 @@ float cnoise(vec3 P){
 }
 `;
 
+const isWebGLAvailable = () => {
+  if (typeof window === 'undefined') return false;
+
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+  } catch {
+    return false;
+  }
+};
+
 const Beams = ({
   beamWidth = 2,
   beamHeight = 15,
@@ -155,7 +166,14 @@ const Beams = ({
   rotation = 0,
   lightMode = false
 }) => {
+  const [webglReady, setWebglReady] = useState(false);
   const meshRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setWebglReady(isWebGLAvailable());
+  }, []);
+
   const beamMaterial = useMemo(
     () =>
       extendMaterial(THREE.MeshStandardMaterial, {
@@ -219,6 +237,18 @@ const Beams = ({
       }),
     [beamColor, speed, noiseIntensity, scale, lightMode]
   );
+
+  if (typeof window === 'undefined' || !webglReady) {
+    return (
+      <div
+        className="beams-fallback"
+        aria-hidden="true"
+        style={{
+          background: `radial-gradient(circle at 20% 20%, ${lightColor}33 0%, transparent 28%), linear-gradient(135deg, ${backgroundColor} 0%, #120d16 100%)`
+        }}
+      />
+    );
+  }
 
   return (
     <CanvasWrapper>

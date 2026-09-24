@@ -12,8 +12,7 @@
 }
 
 .upload-audio-button {
-  width: 100%;
-  font-weight: 600;
+  display: none !important;
 }
 
 .person-audio-box {
@@ -21,20 +20,28 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(90, 59, 41, 0.12);
+  padding-top: 2px;
+  border-top: none;
 }
 
 .audio-preview-label {
   display: block;
+  margin-top: 4px;
   font-size: 0.7rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #614734;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .audio-player {
   width: 100%;
+  max-width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  filter: sepia(0.12) saturate(0.85);
+  background: rgba(255, 250, 240, 0.25);
 }
 
 .audio-drawer-content {
@@ -58,10 +65,13 @@
   padding: 0 16px;
   border-radius: 12px;
   border: 1px dashed rgba(102, 74, 53, 0.4);
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(229, 207, 177, 0.55));
   color: #3c2a22;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: "Segoe Print", "Bradley Hand", cursive;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.38);
 }
 
 .hidden-input {
@@ -85,21 +95,56 @@
 }
 
 .food-book {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: min(96vw, 1400px);
   max-width: 100%;
-  border-radius: 20px;
+  border-radius: 24px;
+  perspective: 2200px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 34px 30px rgba(48, 30, 18, 0.32));
+}
+
+.food-book::before {
+  content: "";
+  position: absolute;
+  inset: 8px 18px 6px 16px;
+  border-radius: 26px;
+  background: linear-gradient(90deg, rgba(88, 58, 39, 0.78), rgba(154, 112, 82, 0.25) 18%, rgba(255,255,255,0.12) 28%, transparent 36%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .flippable-page {
+  position: relative;
   background: linear-gradient(135deg, #d9c1a1, #caa77d);
   border: 1px solid rgba(83, 57, 41, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.26);
+  border-radius: 0 18px 18px 0;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.26),
+    inset -14px 0 18px rgba(90, 62, 42, 0.12),
+    18px 12px 22px rgba(62, 39, 24, 0.18);
+  transform-origin: left center;
+  transform: perspective(1800px) rotateY(0deg);
+}
+
+.flippable-page::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 12px;
+  border-radius: 8px 0 0 8px;
+  background: linear-gradient(180deg, rgba(124, 87, 54, 0.38), rgba(60, 39, 27, 0.16));
+  box-shadow: inset -2px 0 5px rgba(45, 28, 18, 0.18);
 }
 
 .flippable-page-inner {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -107,12 +152,14 @@
 }
 
 .book-spread {
+  position: relative;
   width: 100%;
   height: 100%;
   border: 1px solid rgba(96, 63, 40, 0.12);
   border-radius: 18px;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .book-spread-transparent {
@@ -184,11 +231,25 @@
 
 .book-spread-left {
   background: linear-gradient(180deg, #eadcc3, #d8c0a0);
+  box-shadow: inset 12px 0 18px rgba(78, 52, 36, 0.08), inset -8px 0 18px rgba(255,255,255,0.12);
 }
 
-.book-spread-end-left,
-.book-spread-end-right {
+.book-spread-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(68, 42, 28, 0.18), transparent 12%, transparent 88%, rgba(68, 42, 28, 0.08));
+  pointer-events: none;
+}
+
+.book-spread-end-left {
   background: linear-gradient(135deg, #f3e2cc, #d7ba92);
+}
+
+.book-spread-end-right {
+   background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .end-page-box,
@@ -248,6 +309,11 @@
   justify-content: center;
   background: linear-gradient(135deg, #6e4b34 0%, #4e311f 100%);
   position: relative;
+  border-radius: 22px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.18),
+    inset -18px 0 24px rgba(30,18,12,0.22),
+    18px 12px 24px rgba(32, 20, 12, 0.24);
 }
 
 .book-cover-left::before,
@@ -255,8 +321,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(32, 19, 11, 0.38), rgba(255,255,255,0.06) 18%, transparent 36%);
+  background: linear-gradient(90deg, rgba(32, 19, 11, 0.38), rgba(255,255,255,0.06) 18%, transparent 40%);
   pointer-events: none;
+}
+
+.book-cover-right {
+  transform: perspective(1800px) rotateY(-4deg);
 }
 
 .diary-cover {
@@ -353,21 +423,23 @@
   gap: 14px;
   width: 100%;
   height: 100%;
-  padding: 18px 18px 16px;
+  padding: 20px 24px 18px 28px;
   box-sizing: border-box;
+  color: #4b2d1f;
 }
 
 .page-number {
   display: inline-block;
   width: fit-content;
-  padding: 5px 10px;
+  padding: 6px 10px 4px;
+  background: rgba(92, 62, 39, 0.08);
   border-radius: 999px;
-  background: rgba(90, 56, 38, 0.08);
-  font-size: 10px;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #5b3a2a;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .page-number-alt {
@@ -377,40 +449,45 @@
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .field-group label {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: #614734;
   text-transform: uppercase;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .field-box {
-  min-height: 42px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(90, 59, 41, 0.18);
-  background: rgba(255, 248, 240, 0.28);
+  min-height: 28px;
+  padding: 0 0 8px;
+  border-bottom: 2px solid rgba(91, 58, 42, 0.7);
+  background: transparent;
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  color: #3b2a21;
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  line-height: 1.25;
+  font-weight: 600;
+  color: #3f2a21;
+  font-family: "Segoe Print", "Bradley Hand", cursive;
+  letter-spacing: 0.02em;
+  border-radius: 0;
 }
 
 .food-image-card {
   margin-top: 2px;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(90, 59, 41, 0.18);
-  background: rgba(255, 248, 240, 0.32);
-  box-shadow: 0 8px 22px rgba(70, 40, 30, 0.08);
+  border: 1px solid rgba(90, 59, 41, 0.2);
+  background: rgba(255, 248, 240, 0.1);
+  box-shadow: 0 10px 20px rgba(70, 40, 30, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 150px;
+  min-height: 170px;
   padding: 8px;
   box-sizing: border-box;
 }
@@ -418,10 +495,10 @@
 .food-image {
   display: block;
   width: 100%;
-  height: 150px;
-  object-fit: contain;
+  height: 170px;
+  object-fit: cover;
   object-position: center;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .blank-page {

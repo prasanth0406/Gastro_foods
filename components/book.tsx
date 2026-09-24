@@ -28,8 +28,19 @@ type BookPerson = {
   age: string;
   food: string;
   image?: string;
-  prompt ?: string;
+  prompt?: string;
+  audio?: string;
 };
+
+const createDefaultAudioMap = (): Record<number, { name: string; url: string }> =>
+  bookPeople.reduce<Record<number, { name: string; url: string }>>((acc, person) => {
+    const defaultAudio = person.audio ?? "/audio/audiosb.mp3";
+    acc[person.id] = {
+      name: `${person.name} audio`,
+      url: defaultAudio,
+    };
+    return acc;
+  }, {});
 
 const bookPeople: BookPerson[] = [
   {
@@ -38,6 +49,7 @@ const bookPeople: BookPerson[] = [
     age: "18",
     food: "RimJim",
     image: "/images/Page_1.jpeg",
+    audio: "/audio/audiosb.mp3",
     prompt: "1. Rimjim\nI like Rimjim mainly because of its taste.\nWhen I eat it, it almost melts in my mouth, so the texture feels different.\nIt reminds me of tandoori masala papad or street food.\nEvery bite feels like the flavour is increasing.\nThe taste and texture together are what make it memorable."
   },
   { id: 2, name: "Hareesh", age: "18", food: "Biryani"
@@ -78,12 +90,12 @@ const bookPeople: BookPerson[] = [
     ,image: "/images/page_10.jpeg",
     prompt: "I like Tandoori Masala Papad because it is crispy and spicy.\nI usually enjoy it as a starter before the main food.\nThe roasted taste gives it a different flavour.\nI like the masala on top because it makes the papad more interesting.\nThe combination of crispy papad, onion and masala tastes really good.\nIt reminds me of eating street food with friends.\nI like taking small bites because I can feel the crunch and masala together.\nIt is special to me because every bite has a different flavour."
    },
-  { id: 11, name: "Person 11", age: "Age", food: "Favorite Food" },
-  { id: 12, name: "Person 12", age: "Age", food: "Favorite Food" },
-  { id: 13, name: "Person 13", age: "Age", food: "Favorite Food" },
-  { id: 14, name: "Person 14", age: "Age", food: "Favorite Food" },
-  { id: 15, name: "Person 15", age: "Age", food: "Favorite Food" },
-  { id: 16, name: "Person 16", age: "Age", food: "Favorite Food" },
+  { id: 11, name: "Krishna Kartheek", age: "Age", food: "Favorite Food" },
+  { id: 12, name: "Sampreeth", age: "Age", food: "Favorite Food" },
+  { id: 13, name: "Srikanth", age: "Age", food: "Favorite Food" },
+  { id: 14, name: "Surya Haas", age: "Age", food: "Favorite Food" },
+  { id: 15, name: "Swetha", age: "Age", food: "Favorite Food" },
+  { id: 16, name: "Sathwik", age: "Age", food: "Favorite Food" },
   { id: 17, name: "Person 17", age: "Age", food: "Favorite Food" },
   { id: 18, name: "Person 18", age: "Age", food: "Favorite Food" },
   { id: 19, name: "Person 19", age: "Age", food: "Favorite Food" },
@@ -101,12 +113,18 @@ const Page = forwardRef<HTMLDivElement, { children?: ReactNode; className?: stri
 Page.displayName = "Page";
 
 export default function Book() {
-  const [audioMap, setAudioMap] = useState<Record<number, { name: string; url: string }>>({});
+  const [audioMap, setAudioMap] = useState<Record<number, { name: string; url: string }>>(
+    createDefaultAudioMap
+  );
   const [openDrawerId, setOpenDrawerId] = useState<number | null>(null);
 
   useEffect(() => {
     return () => {
-      Object.values(audioMap).forEach((audio) => URL.revokeObjectURL(audio.url));
+      Object.values(audioMap).forEach((audio) => {
+        if (audio.url.startsWith("blob:")) {
+          URL.revokeObjectURL(audio.url);
+        }
+      });
     };
   }, [audioMap]);
 
@@ -116,7 +134,9 @@ export default function Book() {
 
     setAudioMap((prev) => {
       const existing = prev[personId];
-      if (existing) URL.revokeObjectURL(existing.url);
+      if (existing && existing.url.startsWith("blob:")) {
+        URL.revokeObjectURL(existing.url);
+      }
 
       return {
         ...prev,
@@ -229,14 +249,7 @@ export default function Book() {
                   </div>
                 </div>
               ) : (
-                <div className="book-spread book-spread-end-right">
-                  <div className="end-photo-box">
-                    <div className="photo-placeholder">
-                      <span>Family Memory Photo</span>
-                    </div>
-                    <p>Moments shared around the table stay forever in our hearts.</p>
-                  </div>
-                </div>
+                <div className="book-spread book-spread-transparent" />
               )
             ) : page.side === "left" ? (
               <div className="book-spread book-spread-left">
@@ -265,53 +278,61 @@ export default function Book() {
                   ) : null}
 
                   <div className="person-audio-box">
-                    {audioMap[page.person.id] ? (
-                      <>
-                        <span className="audio-preview-label">Audio</span>
-                        <audio controls src={audioMap[page.person.id].url} className="audio-player" />
-                        <small>{audioMap[page.person.id].name}</small>
-                      </>
-                    ) : (
-                      <Drawer
-                        open={openDrawerId === page.person.id}
-                        onOpenChange={(open) => setOpenDrawerId(open ? page.person.id : null)}
-                      >
-                        <DrawerTrigger className="upload-audio-button">
-                          Upload Audio
-                        </DrawerTrigger>
+                    {(() => {
+                      const currentAudio =
+                        audioMap[page.person.id] ??
+                        (page.person.audio
+                          ? { name: `${page.person.name} audio`, url: page.person.audio }
+                          : null);
 
-                        <DrawerContent className="audio-drawer-content">
-                          <DrawerHeader>
-                            <DrawerTitle>Upload audio for {page.person.name}</DrawerTitle>
-                            <DrawerDescription>
-                              Add a voice note or memory for this person.
-                            </DrawerDescription>
-                          </DrawerHeader>
+                      return currentAudio ? (
+                        <>
+                          <span className="audio-preview-label">Audio</span>
+                          <audio controls src={currentAudio.url} className="audio-player" />
+                          <small>{currentAudio.name}</small>
+                        </>
+                      ) : null;
+                    })()}
 
-                          <div className="drawer-body">
-                            <input
-                              id={`audio-upload-${page.person.id}`}
-                              type="file"
-                              accept="audio/*"
-                              onChange={(event) => handleAudioUpload(event, page.person.id)}
-                              className="hidden-input"
-                            />
-                            <label
-                              htmlFor={`audio-upload-${page.person.id}`}
-                              className="audio-upload-label"
-                            >
-                              Choose Audio File
-                            </label>
-                          </div>
+                    <Drawer
+                      open={openDrawerId === page.person.id}
+                      onOpenChange={(open) => setOpenDrawerId(open ? page.person.id : null)}
+                    >
+                      <DrawerTrigger className="upload-audio-button">
+                        {audioMap[page.person.id] || page.person.audio ? "Replace Audio" : "Upload Audio"}
+                      </DrawerTrigger>
 
-                          <DrawerFooter>
-                            <DrawerClose>
-                              <Button variant="outline">Close</Button>
-                            </DrawerClose>
-                          </DrawerFooter>
-                        </DrawerContent>
-                      </Drawer>
-                    )}
+                      <DrawerContent className="audio-drawer-content">
+                        <DrawerHeader>
+                          <DrawerTitle>Upload audio for {page.person.name}</DrawerTitle>
+                          <DrawerDescription>
+                            Add a voice note or memory for this person.
+                          </DrawerDescription>
+                        </DrawerHeader>
+
+                        <div className="drawer-body">
+                          <input
+                            id={`audio-upload-${page.person.id}`}
+                            type="file"
+                            accept="audio/*"
+                            onChange={(event) => handleAudioUpload(event, page.person.id)}
+                            className="hidden-input"
+                          />
+                          <label
+                            htmlFor={`audio-upload-${page.person.id}`}
+                            className="audio-upload-label"
+                          >
+                            Choose Audio File
+                          </label>
+                        </div>
+
+                        <DrawerFooter>
+                          <DrawerClose>
+                            <Button variant="outline">Close</Button>
+                          </DrawerClose>
+                        </DrawerFooter>
+                      </DrawerContent>
+                    </Drawer>
                   </div>
                 </div>
               </div>

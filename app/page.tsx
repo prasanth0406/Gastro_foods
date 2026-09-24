@@ -1,5 +1,6 @@
 import Beams from "@/components/Beams";
 import Book from "@/components/book";
+import RealisticBook from "@/components/realbook";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 flex-1">
-        <Book />
+       <RealisticBook />
       </div>
 
       <footer className="relative z-10 footer-bar">

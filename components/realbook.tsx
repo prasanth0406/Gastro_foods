@@ -56,7 +56,7 @@ const bookData = [
     age: "31",
     favoriteFood: "fries with nuggets and fruits",
     audioTime: "0:00 / 1:12",
-    photo: "/images/page_16.jpg",
+    photo: "/images/Page_16.jpg",
   },
   {
     id: 7,
@@ -65,7 +65,7 @@ const bookData = [
     age: "18",
     favoriteFood: "Chicken Biryani",
     audioTime: "0:00 / 1:12",
-    photo: "/images/page_2.jpeg",
+    photo: "/images/Page_2.jpeg",
   },
   {
     id: 8,
@@ -83,7 +83,7 @@ const bookData = [
     age: "21",
     favoriteFood: "kaju barfi",
     audioTime: "0:00 / 1:12",
-    photo: "/images/page_14.jpg",
+    photo: "/images/Page_14.jpg",
   },
   {
     id: 10,
@@ -155,7 +155,7 @@ const bookData = [
     age: "20",
     favoriteFood: "Apricon Delight",
     audioTime: "0:00 / 1:12",
-    photo: "/images/page_15.jpg",
+    photo: "/images/Page_15.jpg",
   },
   {
     id: 18,

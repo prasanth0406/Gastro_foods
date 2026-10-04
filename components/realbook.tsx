@@ -449,7 +449,7 @@ function CustomAudioPlayer({ src }: { src: string }) {
         </div>
 
         <span className="text-[10px] font-sans font-bold text-[#2b1f14] whitespace-nowrap">
-          {formatTime(currentTime)} / {formatTime(duration)}
+          {formatTime(currentTime)}
         </span>
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef,useState } from "react";
 import { motion } from "framer-motion";
 
 // 1. DICTIONARY ARRAY: Easily add or remove pages by editing this array
@@ -10,7 +10,7 @@ const bookData = [
     name: "Shashi Vardhan",
     age: "18",
     favoriteFood: "RimJim",
-    audioTime: "0:00 / 0:14",
+    audio: "/audio/shashi(1).mp3",
     photo: "/images/Page_1.jpeg",
     prompt:`Rimjim
 I like Rimjim mainly because of its taste.
@@ -29,8 +29,9 @@ The taste and the new texture are what make it special to me.`
     name: "Pranathi",
     age: "20",
     favoriteFood: "Panipuri",
-    audioTime: "0:00 / 0:45",
+   
     photo: "/images/page_4.jpeg",
+     audio: "/audio/pranathi(pa).mp3",
     prompt:` Pani puri is my favorite food.
 
 
@@ -53,8 +54,9 @@ The taste and the new texture are what make it special to me.`
     name: "Ramarao",
     age: "54",
     favoriteFood: "Mango Pickle",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/page_8.jpeg",
+     audio: "/audio/ramarao.mp3",
     prompt:`Mango Pickle
 Mango pickle is one of the foods I have grown up eating.
 I like it mainly because of its spicy and sour taste.
@@ -71,8 +73,9 @@ The combination of sour mango, spicy masala and oil is what makes it special to 
     name: "Sakuntala",
     age: "48",
     favoriteFood: "Dry fruit Laddu",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/page_7.jpeg",
+    audio: "/audio/sakuntala.mp3",
     prompt:`Dry Fruit Laddu
 I like dry fruit laddu because of the different nuts and seeds in it.
 I remember ingredients like dry fruits and sunflower seeds.
@@ -85,8 +88,10 @@ The combination of nuts and seeds gives it a different taste and texture.`
     name: "Lakshmi",
     age: "45",
     favoriteFood: "Badusha",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/page_5.jpeg",
+    audio: "/audio/lakshmi.mp3",
+
     prompt:`Badusha
 I like Badusha because it is not too sweet.
 I remember ingredients like sanagapindi and chakka, along with sugar.
@@ -97,10 +102,11 @@ Whenever I think about Badusha, I remember her making or serving it.`
     id: 6,
     title: "FOOD MEMORY 6",
     name: "Anjani Shweta priya",
-    age: "31",
+    age: "24",
     favoriteFood: "fries with nuggets and fruits",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/Page_16.jpg",
+    audio: "/audio/swetha.mp3",
     prompt:`My first international trip with my husband brought an unexpected challenge—finding vegetarian food in Bali. For days, I lived on fries, fruits, pancakes and croissants, missing a proper meal.
 
 Then we found a tiny place serving vegetarian Bakso, usually made with chicken. That little bowl felt like a treasure. I still remember the happiness on my face.
@@ -113,8 +119,8 @@ It tasted like relief, adventure, and a little piece of home in a foreign land.`
     name: "Hareesh",
     age: "18",
     favoriteFood: "Chicken Biryani",
-    audioTime: "0:00 / 1:12",
     photo: "/images/Page_2.jpeg",
+    audio: "/audio/hareesh.mp3",
     prompt:`
 I like spicy food because I was born in Macherla, Andhra Pradesh.
 I like Double Roast Chicken Biryani because of its spicy and strong flavour.
@@ -130,8 +136,8 @@ So for me, the memory is not only about the biryani. It is also about the place,
     name: "Akshi",
     age: "16",
     favoriteFood: "Gulabjamun",
-    audioTime: "0:00 / 1:12",
     photo: "/images/page_11.jpg",
+    audio: "/audio/akshi.mp3",
     prompt:`I like gulab jamun the most as I'm a big fan of sweets 
 It just melts in my mouth and I really love sweets so there's no specific reason I like it 
 My love for gulab jamun started with my mom,I used to ask her to make it whenever I go home,it lits up my mood instantly
@@ -144,8 +150,9 @@ I love summer and rainy season the most,cause summer brings me vacation and mang
     name: "srija Atmakuri",
     age: "21",
     favoriteFood: "kaju barfi",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/Page_14.jpg",
+    audio: "/audio/srija.mp3",
     prompt:`my best memories is enjoying it with my family during a festival.
 I like kaju barfi because I love the taste of cashews and its soft, smooth texture.
 The environment was happy and lively, with everyone talking, laughing, and enjoying the celebration.
@@ -159,8 +166,8 @@ That memory was created at my home with my family`
     name: "Suryahaas",
     age: "18",
     favoriteFood: "Chapathi with chicken",
-    audioTime: "0:00 / 1:12",
     photo: "/images/page_18.jpg",
+    audio: "/audio/suryahaas.mp3",
     prompt:`
 Chicken provides protein (helps build muscle and strength).Rainy days environment 
 A rainy day creates a cool and fresh environment. The air becomes cleaner, trees and plants look green, and the temperature decreases. Rain provides water for crops, rivers, and lakes. People enjoy the pleasant weather, but heavy rain can sometimes cause flooding and traffic problems.Iam vegetarian then after some years my friends force me to eat non veg so I try it after some times eaten I became favorite to non veg items`
@@ -171,8 +178,8 @@ A rainy day creates a cool and fresh environment. The air becomes cleaner, trees
     name: "Krishna Kartheek",
     age: "31",
     favoriteFood: "Chicken lasagna",
-    audioTime: "0:00 / 1:12",
     photo: "/images/page_17.jpg",
+    audio: "/audio/krishna.mp3",
     prompt:`Chicken lasagna.
     I love its rich flavor and the combination of cheesy and creamy textures.
     Rainy weather. I really enjoy the calm and refreshing feeling it brings.
@@ -186,8 +193,9 @@ A rainy day creates a cool and fresh environment. The air becomes cleaner, trees
     name: "Sampreeth",
     age: "18",
     favoriteFood: "Panner Biryani",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/page_13.jpg",
+    audio: "/audio/sampreeth.mp3",
     prompt:`
     My favourite food is Panner biryani . My mother cooks it really well.
 
@@ -202,8 +210,9 @@ Food memory: Back in the 2019 just before the Pandemic , when I was celebrating 
     name: "Harika",
     age: "21",
     favoriteFood: "Chicken Lollipop",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/page_12.jpg",
+    audio: "/audio/harika.mp3",
     prompt:`My favorite food is chicken lollipop, because its crispy texture and spicy flavor make every bite exciting.
 I love enjoying it with my friends in a lively yet comfortable restaurant atmosphere.
 One unforgettable moment was when we ordered a plate of chicken lollipops and turned a simple meal into an evening full of laughter and friendly teasing.
@@ -216,7 +225,7 @@ That memory is special because it reminds me that good food becomes even more de
     name: "Vishruth",
     age: "18",
     favoriteFood: "Punugulu",
-    audioTime: "0:00 / 1:12",
+  audio: "/audio/vishruth.mp3",
     photo: "/images/page_6.jpeg",
     prompt:`
     
@@ -236,8 +245,10 @@ For me, the combination of hot Punugulu, chutney and the evening atmosphere make
     name: "Shashi vardhan",
     age: "18",
     favoriteFood: "Masala papad",
-    audioTime: "0:00 / 1:12",
+  
     photo: "/images/page_10.jpeg",
+    audio: "/audio/shashi(2).mp3",
+  
     prompt:`Tandoor Masala Papad
 I like Tandoor Masala Papad because it is crispy and spicy.
 I usually enjoy it as a starter before the main food.
@@ -254,8 +265,9 @@ It is special to me because every bite has a different flavour.`
     name: "Vidhyadhari",
     age: "28",
     favoriteFood: "Sizzling brownie",
-    audioTime: "0:00 / 1:12",
+  
     photo: "/images/page_19.jpg",
+    audio: "/audio/vidhyadhari.mp3",
     prompt:`
     The fresh, warm brownie with vanilla ice cream and hot chocolate sauce creates a perfect combination of flavors and textures.
     Rainy weather. I love the calm and refreshing atmosphere.
@@ -268,8 +280,9 @@ It is special to me because every bite has a different flavour.`
     name: "Pranathi",
     age: "20",
     favoriteFood: "Apricon Delight",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/Page_15.jpg",
+    audio: "/audio/pranathi(ap).mp3",
     prompt:`
    Apricot Delight is my favorite dessert.
  I like it because I love its sweet and creamy taste.
@@ -286,8 +299,9 @@ It is special to me because every bite has a different flavour.`
     name: "Chaitanya",
     age: "42",
     favoriteFood: "Biryani",
-    audioTime: "0:00 / 1:12",
     photo: "/images/page_9.jpeg",
+    audio: "/audio/chaitanya.mp3",
+    
     prompt:`
     
 My grandmother used to make vankaya biryani.
@@ -304,8 +318,9 @@ Usually, it is made only on special occasions, so whenever I eat it, it feels di
     name: "Prasanth",
     age: "18",
     favoriteFood: "Boba",
-    audioTime: "0:00 / 1:12",
+    
     photo: "/images/page_20.jpg",
+    audio: "/audio/prasanth.mp3",
     prompt:`
      Boba 
  I like Boba because it has a sweet and refreshing taste.
@@ -324,8 +339,9 @@ Usually, it is made only on special occasions, so whenever I eat it, it feels di
     name: "Ashwini",
     age: "18",
     favoriteFood: "Laphing",
-    audioTime: "0:00 / 1:12",
+
     photo: "/images/page_21.jpg",
+    audio: "/audio/ashwini.mp3",
     prompt:` 
  I like Laphing because it has a spicy and tangy taste.
  The chilli and sauces give it a strong flavour.
@@ -341,10 +357,104 @@ Usually, it is made only on special occasions, so whenever I eat it, it feels di
     prompt: "Thank you for exploring these food memories with us. We hope they brought a smile to your face and a taste of nostalgia to your heart. Until next time, keep savoring the flavors of life!"
   }
   
+
+  
   
   
 
 ];
+
+
+function CustomAudioPlayer({ src }: { src: string }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const togglePlay = async () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      await audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = Number(e.target.value);
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
+  };
+
+  const formatTime = (time: number) => {
+    if (!Number.isFinite(time)) return "0:00";
+
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  return (
+    <div
+      className="relative z-[9999] pointer-events-auto mt-4 w-full"
+      onClick={(e) => e.stopPropagation()}
+      onPointerDown={(e) => e.stopPropagation()}
+    >
+      <audio
+        ref={audioRef}
+        src={src}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={() => setIsPlaying(false)}
+      />
+
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={togglePlay}
+          className="w-8 h-8 rounded-full bg-[#2b1f14] text-[#EEEAE2] flex items-center justify-center text-xs shrink-0 shadow-md"
+        >
+          {isPlaying ? "❚❚" : "▶"}
+        </button>
+
+        <div className="flex-1">
+          <input
+            type="range"
+            min="0"
+            max={duration || 0}
+            value={currentTime}
+            onChange={handleSeek}
+            className="w-full h-[2px] accent-[#2b1f14] cursor-pointer"
+          />
+        </div>
+
+        <span className="text-[10px] font-sans font-bold text-[#2b1f14] whitespace-nowrap">
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function RealisticBook() {
   // 0 means closed. 1 means first spread open, 2 means second spread, etc.
@@ -397,7 +507,7 @@ const openPrevPage = (e: React.MouseEvent<HTMLDivElement>) => {
 
         {/* === 2. 3D PAGE THICKNESS (Right Edge) === */}
         <div
-          className="absolute top-1 bottom-1 left-0 right-[-10px] bg-[#d3c2a8] rounded-r-md overflow-hidden flex flex-col justify-evenly pointer-events-none"
+          className="absolute top-1 bottom-1 left-0 right-[-10px] bg-[#d3c2a8] rounded-r-md overflow-hidden flex flex-col"
           style={{
             transform: "translateZ(-20px)",
             boxShadow: "inset 5px 0 15px rgba(0,0,0,0.3)",
@@ -438,7 +548,20 @@ const openPrevPage = (e: React.MouseEvent<HTMLDivElement>) => {
               }}
               animate={{ rotateY: isFlipped ? -180 : 0 }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              onClick={isFlipped ? openPrevPage : openNextPage}
+              onClick={(e) => {
+  const target = e.target as HTMLElement;
+
+  // Don't flip the page when interacting with audio
+  if (target.closest("audio")) {
+    return;
+  }
+
+  if (isFlipped) {
+    openPrevPage(e);
+  } else {
+    openNextPage(e);
+  }
+}}
             >
               {/* FRONT OF THE SHEET (Visible on the right side) */}
               <div
@@ -511,7 +634,7 @@ const openPrevPage = (e: React.MouseEvent<HTMLDivElement>) => {
                 }}
               >
                 {/* DYNAMIC DATA TEMPLATE */}
-                <div className="relative z-10 text-[#2b1f14] font-serif flex-1 flex flex-col pointer-events-none">
+                <div className="relative z-10 text-[#2b1f14] font-serif flex-1 flex flex-col">
                   <h2 className="carattere-regular text-sm tracking-widest border-b border-[#2b1f14]/40 pb-2 mb-6">
                     {sheet.backData.title}
                   </h2>
@@ -554,18 +677,14 @@ const openPrevPage = (e: React.MouseEvent<HTMLDivElement>) => {
                     </div>
                   </div>
 
-                  {/* Fake Audio Player */}
-                  <div className="flex items-center gap-3 mt-6">
-                    <div className="w-8 h-8 rounded-full bg-[#2b1f14] text-[#EEEAE2] flex items-center justify-center text-xs pl-1 shadow-sm">
-                      ▶
-                    </div>
-                    <div className="flex-1 h-[2px] bg-[#F2F1F0]/30 relative">
-                      <div className="absolute top-[-2px] left-[30%] w-2 h-2 rounded-full bg-[#F7F4F2]"></div>
-                    </div>
-                    <span className="text-[10px] font-sans font-bold bg-[#F7F4F2]">
-                      {sheet.backData.audioTime}
-                    </span>
-                  </div>
+                 {/* Real Audio Player */}
+{/* Real Audio Player */}
+
+  {/* Custom Audio Player */}
+{sheet.backData.audio && (
+  <CustomAudioPlayer src={sheet.backData.audio} />
+)}
+
                 </div>
               </div>):(
                 <div 

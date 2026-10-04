@@ -1,5 +1,5 @@
 import Beams from "@/components/Beams";
-import Book from "@/components/book";
+
 import RealisticBook from "@/components/realbook";
 
 export default function Home() {
